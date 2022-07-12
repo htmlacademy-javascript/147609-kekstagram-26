@@ -1,4 +1,2 @@
 import './util.js';
-import { generatePhotos } from './data.js';
-
-generatePhotos();
+import './thumbnail-rendering.js';
