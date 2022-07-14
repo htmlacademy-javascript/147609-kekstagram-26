@@ -1,3 +1,5 @@
+const bigPictureDialog = document.querySelector('.big-picture');
+
 const showComments = (comments) => {
   const commentsElements = document.querySelector('.social__comments');
   commentsElements.innerHTML = '';
@@ -21,20 +23,32 @@ const showComments = (comments) => {
     commentElement.appendChild(textElement);
     commentsElements.append(elementsFragment);
   });
+
+  bigPictureDialog.querySelector('.comments-visible').textContent = comments.length;
 };
 
 const openPicture = ({url, likes, comments, description}) => {
-  const bigPictureDialog = document.querySelector('.big-picture');
   bigPictureDialog.classList.remove('hidden');
   bigPictureDialog.querySelector('.big-picture__img').querySelector('img').src = url;
   bigPictureDialog.querySelector('.likes-count').textContent = likes;
   bigPictureDialog.querySelector('.comments-count').textContent = comments.length;
   bigPictureDialog.querySelector('.social__caption').textContent = description;
-  showComments(comments);
-
-  bigPictureDialog.querySelector('.social__comment-count').classList.add('hidden');
-  bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
   document.querySelector('body').classList.add('modal-open');
+  const loaderButton = bigPictureDialog.querySelector('.social__comments-loader');
+  bigPictureDialog.querySelector('.comments-loader').classList.remove('hidden');
+  let displayedCommentsCount = 5;
+  if(comments.length <= 5) {
+    bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
+  }
+
+  loaderButton.addEventListener('click', () => {
+    displayedCommentsCount = displayedCommentsCount + 5;
+    showComments(comments.slice(0, displayedCommentsCount));
+    if(comments.length <= displayedCommentsCount) {
+      bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
+    }
+  });
+  showComments(comments.slice(0, 5));
 };
 
 export { openPicture };
