@@ -1,4 +1,5 @@
 const bigPictureDialog = document.querySelector('.big-picture');
+const loaderButton = bigPictureDialog.querySelector('.social__comments-loader');
 
 const showComments = (comments) => {
   const commentsElements = document.querySelector('.social__comments');
@@ -34,20 +35,19 @@ const openPicture = ({url, likes, comments, description}) => {
   bigPictureDialog.querySelector('.comments-count').textContent = comments.length;
   bigPictureDialog.querySelector('.social__caption').textContent = description;
   document.querySelector('body').classList.add('modal-open');
-  const loaderButton = bigPictureDialog.querySelector('.social__comments-loader');
   bigPictureDialog.querySelector('.comments-loader').classList.remove('hidden');
   let displayedCommentsCount = 5;
   if(comments.length <= 5) {
     bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
   }
 
-  loaderButton.addEventListener('click', () => {
+  loaderButton.onclick = () => {
     displayedCommentsCount = displayedCommentsCount + 5;
     showComments(comments.slice(0, displayedCommentsCount));
-    if(comments.length <= displayedCommentsCount) {
+    if(displayedCommentsCount >= comments.length) {
       bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
     }
-  });
+  };
   showComments(comments.slice(0, 5));
 };
 
