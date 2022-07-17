@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { resetPhotoStyle } from './image-editing.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileElement = document.querySelector('#upload-file');
@@ -30,11 +31,15 @@ function closeUploadForm() {
   document.removeEventListener('keydown', onUploadFormEscKeydown);
   form.reset();
   pristine.reset();
+  resetPhotoStyle();
 }
 
 function validateHashtag(value) {
   const hashtags = value.trim().split(' ');
   let validate = true;
+  if(!value.length) {
+    return true;
+  }
   if(hashtags.length > 5) {
     return false;
   }
@@ -73,19 +78,6 @@ uploadFileElement.addEventListener('change', (evt) => {
   }
 });
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  const isValid = pristine.validate();
-  if (isValid) {
-    // eslint-disable-next-line no-console
-    console.log('Можно отправлять');
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('Форма невалидна');
-  }
-});
-
 hashtagsField.addEventListener('focus', () => document.removeEventListener('keydown', onUploadFormEscKeydown));
 
 hashtagsField.addEventListener('blur', () => document.addEventListener('keydown', onUploadFormEscKeydown));
@@ -93,3 +85,5 @@ hashtagsField.addEventListener('blur', () => document.addEventListener('keydown'
 commentField.addEventListener('focus', () => document.removeEventListener('keydown', onUploadFormEscKeydown));
 
 commentField.addEventListener('blur', () => document.addEventListener('keydown', onUploadFormEscKeydown));
+
+export { closeUploadForm, onUploadFormEscKeydown, pristine };

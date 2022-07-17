@@ -30,4 +30,4 @@ closeButton.addEventListener('click', (event)=> {
   closeDialog();
 }, false);
 
-export { pictureElementListener };
+export { pictureElementListener, onPopupEscKeydown };
