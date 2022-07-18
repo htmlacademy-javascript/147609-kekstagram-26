@@ -9,7 +9,7 @@ const sliderform = document.querySelector('.img-upload__effect-level');
 
 const addScaleStyle = (value) => {
   const transformValue = value / 100;
-  imgUploadPreview.querySelector('img').style = `transform: scale(${transformValue})`;
+  imgUploadPreview.querySelector('img').style.transform = `scale(${transformValue})`;
 };
 
 const resetPhotoStyle = () => {
@@ -22,7 +22,7 @@ const resetPhotoStyle = () => {
 
 const onControlSmallerClick = () => {
   const value = parseInt(scaleControlValue.value, 10);
-  if(value > 0) {
+  if(value > 25) {
     scaleControlValue.value = `${value - 25}%`;
     addScaleStyle(value - 25);
   }

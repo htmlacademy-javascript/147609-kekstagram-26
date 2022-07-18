@@ -1,12 +1,13 @@
 import { getRandomNumber, debounce } from './util.js';
 import { getPhotos } from './thumbnail-rendering.js';
 
+const RERENDER_DELAY = 500;
+
 const filterRandomBtn = document.querySelector('#filter-random');
 const filterDiscussedBtn = document.querySelector('#filter-discussed');
 const filterDefaultBtn = document.querySelector('#filter-default');
 const buttons = document.querySelectorAll('.img-filters__button');
-
-const RERENDER_DELAY = 500;
+const comparePhotos = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 function toggleClass(buttonElement) {
   buttons.forEach((item) => item.classList.remove('img-filters__button--active'));
@@ -36,8 +37,6 @@ function filterRandom(photosList) {
     }
   });
 }
-
-const comparePhotos = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 function filterDiscussed(photosList) {
   filterDiscussedBtn.addEventListener('click', () => {

@@ -1,4 +1,4 @@
-import { showSuccessAlert, showErrorAlert } from './show-alert.js';
+import { showSuccessAlert, showErrorAlert } from './show-result-messages.js';
 import { pristine } from './validation.js';
 
 const submitButton = document.querySelector('.img-upload__submit');
@@ -22,8 +22,7 @@ const setImgUploadFormSubmit = (onSuccess) => {
       ).catch(() => showErrorAlert('Возникла ошибка при попытке отправить форму.')
       ).finally(() => submitButton.removeAttribute('disabled'));
     } else {
-      // eslint-disable-next-line no-console
-      console.log('Форма невалидна');
+      showErrorAlert('Некорректное заполнение формы', 'Ок');
     }
   });
 };

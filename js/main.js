@@ -4,7 +4,7 @@ import './slider.js';
 import './actions-with-photo.js';
 import './thumbnail-rendering.js';
 import './big-picture-rendering.js';
-import './show-alert.js';
+import './show-result-messages.js';
 import './validation.js';
 import './submit-form.js';
 import './http-requests.js';

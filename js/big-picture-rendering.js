@@ -1,5 +1,8 @@
+import { closeDialog } from './actions-with-photo.js';
+
 const bigPictureDialog = document.querySelector('.big-picture');
 const loaderButton = bigPictureDialog.querySelector('.social__comments-loader');
+const closeButton = document.querySelector('.big-picture__cancel');
 
 const showComments = (comments) => {
   const commentsElements = document.querySelector('.social__comments');
@@ -28,6 +31,12 @@ const showComments = (comments) => {
   bigPictureDialog.querySelector('.comments-visible').textContent = comments.length;
 };
 
+const onCloseButtonClick = (event) => {
+  event.preventDefault();
+  closeDialog();
+  closeButton.removeEventListener('click', onCloseButtonClick);
+};
+
 const openPicture = ({url, likes, comments, description}) => {
   bigPictureDialog.classList.remove('hidden');
   bigPictureDialog.querySelector('.big-picture__img').querySelector('img').src = url;
@@ -48,6 +57,8 @@ const openPicture = ({url, likes, comments, description}) => {
       bigPictureDialog.querySelector('.comments-loader').classList.add('hidden');
     }
   };
+
+  closeButton.addEventListener('click', onCloseButtonClick);
   showComments(comments.slice(0, 5));
 };
 
