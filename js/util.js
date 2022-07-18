@@ -11,4 +11,12 @@ const checkMaxLength = (string, maxLength) => string.length <= maxLength;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { checkMaxLength, getRandomNumber, isEscapeKey };
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export { checkMaxLength, getRandomNumber, isEscapeKey, debounce };
