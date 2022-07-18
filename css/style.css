@@ -1408,20 +1408,3 @@ main {
 .hidden {
   display: none;
 }
-
-.img-upload__field-wrapper {
-  position: relative;
-}
-
-.form__error {
-  position: absolute;
-  color: red;
-  text-transform: lowercase;
-  left: 68px;
-  bottom: 2px;
-}
-
-.form__item--invalid input {
-  border: 2px solid red;
-  outline: none;
-}
