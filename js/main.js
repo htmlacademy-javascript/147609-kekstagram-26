@@ -8,3 +8,4 @@ import './show-alert.js';
 import './validation.js';
 import './submit-form.js';
 import './http-requests.js';
+import './filters.js';
