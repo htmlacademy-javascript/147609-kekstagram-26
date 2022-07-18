@@ -4,7 +4,7 @@ const picturesListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const imgFilters = document.querySelector('.img-filters');
 
-const getPhotos = function(photos) {
+const getPhotos = (photos) => {
   imgFilters.classList.remove('img-filters--inactive');
   const picturesListFragment = document.createDocumentFragment();
   const pictures = document.querySelectorAll('.picture');

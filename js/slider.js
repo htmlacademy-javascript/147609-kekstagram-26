@@ -33,27 +33,27 @@ sliderElement.noUiSlider.on('update', () => {
   sliderValueElement.value = sliderElement.noUiSlider.get();
   switch (filterName) {
     case 'chrome':
-      imgUploadPreview.querySelector('img').style = `filter: grayscale(${sliderValueElement.value})`;
+      imgUploadPreview.querySelector('img').style.filter = `grayscale(${sliderValueElement.value})`;
       break;
     case 'sepia':
-      imgUploadPreview.querySelector('img').style = `filter: sepia(${sliderValueElement.value})`;
+      imgUploadPreview.querySelector('img').style.filter = `sepia(${sliderValueElement.value})`;
       break;
     case 'marvin':
-      imgUploadPreview.querySelector('img').style = `filter: invert(${sliderValueElement.value}%)`;
+      imgUploadPreview.querySelector('img').style.filter = `invert(${sliderValueElement.value}%)`;
       break;
     case 'phobos':
-      imgUploadPreview.querySelector('img').style = `filter: blur(${sliderValueElement.value}px)`;
+      imgUploadPreview.querySelector('img').style.filter = `blur(${sliderValueElement.value}px)`;
       break;
     case 'heat':
-      imgUploadPreview.querySelector('img').style = `filter: brightness(${sliderValueElement.value})`;
+      imgUploadPreview.querySelector('img').style.filter = `brightness(${sliderValueElement.value})`;
       break;
     default:
-      imgUploadPreview.querySelector('img').style = '';
+      imgUploadPreview.querySelector('img').style.filter = '';
       break;
   }
 });
 
-const changeSliderConfig = () => {
+function changeSliderConfig() {
   switch (filterName) {
     case 'chrome':
     case 'sepia':
@@ -100,6 +100,6 @@ const changeSliderConfig = () => {
       sliderElement.noUiSlider.set(100);
       break;
   }
-};
+}
 
 export { saveFilterName, changeSliderConfig, sliderValueElement };

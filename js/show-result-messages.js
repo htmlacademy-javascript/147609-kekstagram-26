@@ -27,20 +27,7 @@ const onErrorAlertClick = (event) => {
   }
 };
 
-function resetSuccessAlertListeners() {
-  document.querySelector('.success').remove();
-  document.removeEventListener('keydown', onSuccessAlertKeyDown);
-  document.removeEventListener('click', onSuccessAlertClick);
-}
-
-function resetErrorAlertListeners() {
-  document.querySelector('.error').remove();
-  document.removeEventListener('keydown', onErrorAlertKeyDown);
-  document.addEventListener('keydown', onUploadFormEscKeydown);
-  document.removeEventListener('click', onErrorAlertClick);
-}
-
-const showSuccessAlert = function(message) {
+const showSuccessAlert = (message) => {
   const successAlertTemplate = document.querySelector('#success').content;
   const alertFragment = document.createDocumentFragment();
   const alertElement = successAlertTemplate.cloneNode(true);
@@ -57,7 +44,7 @@ const showSuccessAlert = function(message) {
   document.addEventListener('click', onSuccessAlertClick);
 };
 
-const showErrorAlert = function(message) {
+const showErrorAlert = (message, btnText) => {
   const errorAlertTemplate = document.querySelector('#error').content;
   const alertFragment = document.createDocumentFragment();
   const alertElement = errorAlertTemplate.cloneNode(true);
@@ -68,11 +55,28 @@ const showErrorAlert = function(message) {
   document.querySelector('.error').style['z-index'] = 2;
   const button = document.querySelector('.error__button');
 
+  if(btnText) {
+    button.textContent = btnText;
+  }
+
   button.onclick = () => document.querySelector('.error').remove();
 
   document.removeEventListener('keydown', onUploadFormEscKeydown);
   document.addEventListener('keydown', onErrorAlertKeyDown);
   document.addEventListener('click', onErrorAlertClick);
 };
+
+function resetSuccessAlertListeners() {
+  document.querySelector('.success').remove();
+  document.removeEventListener('keydown', onSuccessAlertKeyDown);
+  document.removeEventListener('click', onSuccessAlertClick);
+}
+
+function resetErrorAlertListeners() {
+  document.querySelector('.error').remove();
+  document.removeEventListener('keydown', onErrorAlertKeyDown);
+  document.addEventListener('keydown', onUploadFormEscKeydown);
+  document.removeEventListener('click', onErrorAlertClick);
+}
 
 export { showSuccessAlert, showErrorAlert };
