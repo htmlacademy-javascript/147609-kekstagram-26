@@ -1,5 +1,6 @@
-import { showSuccessAlert, showErrorAlert } from './show-result-messages.js';
+import { showErrorAlert } from './show-result-messages.js';
 import { pristine } from './validation.js';
+import { sendForm } from './api.js';
 
 const submitButton = document.querySelector('.img-upload__submit');
 
@@ -11,16 +12,7 @@ const setImgUploadFormSubmit = (onSuccess) => {
     if (isValid) {
       submitButton.setAttribute('disabled', 'disabled');
       const formData = new FormData(evt.target);
-
-      fetch(
-        'https://26.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then(() => onSuccess(showSuccessAlert('Картинка сохранена.'))
-      ).catch(() => showErrorAlert('Возникла ошибка при попытке отправить форму.')
-      ).finally(() => submitButton.removeAttribute('disabled'));
+      sendForm(formData, onSuccess, submitButton);
     } else {
       showErrorAlert('Некорректное заполнение формы', 'Ок');
     }

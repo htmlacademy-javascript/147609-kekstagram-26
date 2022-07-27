@@ -2,6 +2,13 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValueElement = document.querySelector('.effect-level__value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
 
+const FILTER_NAMES = {
+  chrome: 'chrome',
+  sepia: 'sepia',
+  marvin: 'marvin',
+  phobos: 'phobos',
+  heat: 'heat'
+};
 let filterName = 'none';
 
 const saveFilterName = (filterValue) => {
@@ -32,19 +39,19 @@ noUiSlider.create(sliderElement, {
 sliderElement.noUiSlider.on('update', () => {
   sliderValueElement.value = sliderElement.noUiSlider.get();
   switch (filterName) {
-    case 'chrome':
+    case FILTER_NAMES.chrome:
       imgUploadPreview.querySelector('img').style.filter = `grayscale(${sliderValueElement.value})`;
       break;
-    case 'sepia':
+    case FILTER_NAMES.sepia:
       imgUploadPreview.querySelector('img').style.filter = `sepia(${sliderValueElement.value})`;
       break;
-    case 'marvin':
+    case FILTER_NAMES.marvin:
       imgUploadPreview.querySelector('img').style.filter = `invert(${sliderValueElement.value}%)`;
       break;
-    case 'phobos':
+    case FILTER_NAMES.phobos:
       imgUploadPreview.querySelector('img').style.filter = `blur(${sliderValueElement.value}px)`;
       break;
-    case 'heat':
+    case FILTER_NAMES.heat:
       imgUploadPreview.querySelector('img').style.filter = `brightness(${sliderValueElement.value})`;
       break;
     default:
