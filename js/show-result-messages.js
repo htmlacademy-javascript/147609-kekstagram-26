@@ -1,30 +1,43 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from './utils.js';
 import { onUploadFormEscKeydown } from './validation.js';
 
-const onSuccessAlertKeyDown = (event) => {
+const onDocumentSuccessKeyDown = (event) => {
   if (isEscapeKey(event)) {
     event.preventDefault();
     resetSuccessAlertListeners();
   }
 };
 
-const onErrorAlertKeyDown = (event) => {
+const onDocumentErrorKeyDown = (event) => {
   if (isEscapeKey(event)) {
     event.preventDefault();
     resetErrorAlertListeners();
   }
 };
 
-const onSuccessAlertClick = (event) => {
+const onDocumentSuccessClick = (event) => {
   if(event.target.className !== 'success__inner') {
     resetSuccessAlertListeners();
   }
 };
 
-const onErrorAlertClick = (event) => {
+
+const onDocumentErrorClick = (event) => {
   if(event.target.className !== 'error__inner') {
     resetErrorAlertListeners();
   }
+};
+
+const onSuccessAlertButtonClick = () => {
+  const successAlertBlock = document.querySelector('.success');
+  successAlertBlock.remove();
+  document.querySelector('.success__button').removeEventListener('click', onSuccessAlertButtonClick);
+};
+
+
+const onErrorAlertButtonClick = () => {
+  document.querySelector('.error').remove();
+  document.querySelector('.error__button').removeEventListener('click', onErrorAlertButtonClick);
 };
 
 const showSuccessAlert = (message) => {
@@ -35,13 +48,11 @@ const showSuccessAlert = (message) => {
   alertFragment.appendChild(alertElement);
   document.body.append(alertFragment);
 
-  const button = document.querySelector('.success__button');
-  const successAlertBlock = document.querySelector('.success');
+  const successAlertButton = document.querySelector('.success__button');
 
-  button.onclick = () => successAlertBlock.remove();
-
-  document.addEventListener('keydown', onSuccessAlertKeyDown);
-  document.addEventListener('click', onSuccessAlertClick);
+  successAlertButton.addEventListener('cllick', onSuccessAlertButtonClick);
+  document.addEventListener('keydown', onDocumentSuccessKeyDown);
+  document.addEventListener('click', onDocumentSuccessClick);
 };
 
 const showErrorAlert = (message, btnText) => {
@@ -59,24 +70,23 @@ const showErrorAlert = (message, btnText) => {
     button.textContent = btnText;
   }
 
-  button.onclick = () => document.querySelector('.error').remove();
-
+  button.addEventListener('click', onErrorAlertButtonClick);
   document.removeEventListener('keydown', onUploadFormEscKeydown);
-  document.addEventListener('keydown', onErrorAlertKeyDown);
-  document.addEventListener('click', onErrorAlertClick);
+  document.addEventListener('keydown', onDocumentErrorKeyDown);
+  document.addEventListener('click', onDocumentErrorClick);
 };
 
 function resetSuccessAlertListeners() {
   document.querySelector('.success').remove();
-  document.removeEventListener('keydown', onSuccessAlertKeyDown);
-  document.removeEventListener('click', onSuccessAlertClick);
+  document.removeEventListener('keydown', onDocumentSuccessKeyDown);
+  document.removeEventListener('click', onDocumentSuccessClick);
 }
 
 function resetErrorAlertListeners() {
   document.querySelector('.error').remove();
-  document.removeEventListener('keydown', onErrorAlertKeyDown);
+  document.removeEventListener('keydown', onDocumentErrorKeyDown);
   document.addEventListener('keydown', onUploadFormEscKeydown);
-  document.removeEventListener('click', onErrorAlertClick);
+  document.removeEventListener('click', onDocumentErrorClick);
 }
 
 export { showSuccessAlert, showErrorAlert };

@@ -1,42 +1,42 @@
 import { saveFilterName, changeSliderConfig, sliderValueElement } from './slider.js';
+const STEP_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
+const DECIMAL_NUMBER_SYSREM = 10;
 
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
-const imgUploadEffectsFieldset = document.querySelector('.img-upload__effects');
 const sliderform = document.querySelector('.img-upload__effect-level');
 
 const addScaleStyle = (value) => {
-  const transformValue = value / 100;
+  const transformValue = value / MAX_SCALE_VALUE;
   imgUploadPreview.querySelector('img').style.transform = `scale(${transformValue})`;
 };
 
 const resetPhotoStyle = () => {
-  scaleControlValue.value = '100%';
-  sliderValueElement.value = '100%';
+  scaleControlValue.value = `${MAX_SCALE_VALUE}%`;
+  sliderValueElement.value = `${MAX_SCALE_VALUE}%`;
   imgUploadPreview.querySelector('img').className = '';
   imgUploadPreview.querySelector('img').style = '';
   sliderform.classList.add('hidden');
 };
 
-const onControlSmallerClick = () => {
-  const value = parseInt(scaleControlValue.value, 10);
-  if(value > 25) {
-    scaleControlValue.value = `${value - 25}%`;
-    addScaleStyle(value - 25);
+const onScaleControlSmallerClick = () => {
+  const value = parseInt(scaleControlValue.value, DECIMAL_NUMBER_SYSREM);
+  if(value > STEP_VALUE) {
+    scaleControlValue.value = `${value - STEP_VALUE}%`;
+    addScaleStyle(value - STEP_VALUE);
   }
 };
 
-const onControlBiggerClick = () => {
-  const value = parseInt(scaleControlValue.value, 10);
-  if(value < 100) {
-    scaleControlValue.value = `${value + 25}%`;
-    addScaleStyle(value + 25);
+const onScaleControlBiggerClick = () => {
+  const value = parseInt(scaleControlValue.value, DECIMAL_NUMBER_SYSREM);
+  if(value < MAX_SCALE_VALUE) {
+    scaleControlValue.value = `${value + STEP_VALUE}%`;
+    addScaleStyle(value + STEP_VALUE);
   }
 };
 
-function onFilterChange (evt) {
+const onFilterChange = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     const filterValue = evt.target.value;
 
@@ -50,13 +50,8 @@ function onFilterChange (evt) {
       resetPhotoStyle();
     }
   }
-}
-
-scaleControlSmaller.addEventListener('click', onControlSmallerClick);
-scaleControlBigger.addEventListener('click', onControlBiggerClick);
-
-imgUploadEffectsFieldset.addEventListener('change', onFilterChange);
+};
 
 resetPhotoStyle();
 
-export { resetPhotoStyle };
+export { resetPhotoStyle, onScaleControlSmallerClick , onScaleControlBiggerClick, onFilterChange };

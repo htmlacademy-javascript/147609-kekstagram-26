@@ -1,4 +1,4 @@
-import { pictureElementListener } from './actions-with-photo.js';
+import { bigPictureElementListener } from './big-picture.js';
 
 const picturesListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
@@ -19,7 +19,7 @@ const getPhotos = (photos) => {
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     picturesListFragment.appendChild(pictureElement);
-    pictureElementListener(picture, data);
+    bigPictureElementListener(picture, data);
   });
   picturesListElement.appendChild(picturesListFragment);
 };

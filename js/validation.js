@@ -1,5 +1,10 @@
-import { isEscapeKey } from './util.js';
-import { resetPhotoStyle } from './image-editing.js';
+import { isEscapeKey } from './utils.js';
+import { resetPhotoStyle, onScaleControlSmallerClick, onScaleControlBiggerClick, onFilterChange } from './image-editing.js';
+import { scaleControlSmaller, scaleControlBigger, imgUploadEffectsFieldset } from './uploaded-picture.js';
+
+const MAX_HASHTAGS_AMOUNT = 5;
+const MIN_HASHTAGS_AMOUNT = 1;
+const INVALID_HASHTAG_MESSAGE = 'Некорректный #ХэшТег';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileElement = document.querySelector('#upload-file');
@@ -32,19 +37,22 @@ function closeUploadForm() {
   form.reset();
   pristine.reset();
   resetPhotoStyle();
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.removeEventListener('click', onScaleControlBiggerClick);
+  imgUploadEffectsFieldset.removeEventListener('change', onFilterChange);
 }
 
-function validateHashtag(value) {
+const validateHashtag = (value) => {
   const hashtags = value.trim().split(' ');
   let validate = true;
   if(!value.length) {
     return true;
   }
-  if(hashtags.length > 5) {
+  if(hashtags.length > MAX_HASHTAGS_AMOUNT) {
     return false;
   }
   hashtags.forEach((elem, i) => {
-    if(hashtags.filter((item) => item.toLowerCase() === elem.toLowerCase()).length > 1) {
+    if(hashtags.filter((item) => item.toLowerCase() === elem.toLowerCase()).length > MIN_HASHTAGS_AMOUNT) {
       validate = false;
     }
     if(!hashtagRegExp.test(hashtags[i])) {
@@ -53,12 +61,12 @@ function validateHashtag(value) {
   });
 
   return validate;
-}
+};
 
 pristine.addValidator(
   hashtagsField,
   validateHashtag,
-  'Некорректный #ХэшТег'
+  INVALID_HASHTAG_MESSAGE
 );
 
 hashtagsField.addEventListener('input', () => {
